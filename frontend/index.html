@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyTrack</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <header>
+        <h1>StudyTrack — Student Roster Dashboard</h1>
+    </header>
+
+    <nav>
+        <a href="#roster-list">Roster</a>
+        <a href="#student-form">Add Student</a>
+        <a href="#ai-helper">AI Helper</a>
+    </nav>
+
+    <div id="error-banner" class="hidden" role="alert"></div>
+
+    <section id="add-student">
+        <h2>Add New Student</h2>
+        <form id="student-form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age" min="1" required>
+
+            <button type="submit">Add Student</button>
+        </form>
+    </section>
+
+    <section id="roster-list">
+        <h2>Student Roster</h2>
+        <div id="cards-container"></div>
+    </section>
+
+    <section id="ai-helper">
+        <h2>AI Helper</h2>
+
+        <div class="ai-panel">
+            <h3>Summarize Notes</h3>
+            <textarea id="notes-input" rows="6" placeholder="Paste your study notes here..."></textarea>
+            <button id="summarize-btn" type="button">Summarize</button>
+            <div id="summary-result" class="result-box hidden"></div>
+        </div>
+
+        <div class="ai-panel">
+            <h3>Search Notes</h3>
+            <input type="text" id="search-input" placeholder="Enter search query...">
+            <button id="search-btn" type="button">Search Notes</button>
+            <div id="search-results" class="result-box hidden"></div>
+        </div>
+    </section>
+
+    <footer>
+        <p>StudyTrack &mdash; Myntra Trainee Enablement Platform</p>
+    </footer>
+
+    <script src="/app.js"></script>
+</body>
+</html>
