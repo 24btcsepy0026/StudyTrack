@@ -1,6 +1,5 @@
 import math
 import re
-import os
 
 VOCABULARY = [
     "sort", "search", "binary", "insertion", "sql", "join",

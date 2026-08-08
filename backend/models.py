@@ -12,7 +12,9 @@ class Student(Base):
     email = Column(String, unique=True, nullable=False)
     age = Column(Integer, nullable=False)
 
-    courses = relationship("Course", back_populates="student")
+    courses = relationship(
+        "Course", back_populates="student", cascade="all, delete-orphan"
+    )
 
 
 class Course(Base):

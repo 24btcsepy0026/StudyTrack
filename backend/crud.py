@@ -64,8 +64,11 @@ def get_student_course_count(db: Session, student_id: int):
     )
 
 
-def get_courses(db: Session):
-    return db.query(Course).all()
+def get_courses(db: Session, student_id: int | None = None):
+    query = db.query(Course)
+    if student_id is not None:
+        query = query.filter(Course.student_id == student_id)
+    return query.all()
 
 
 def get_course(db: Session, course_id: int):

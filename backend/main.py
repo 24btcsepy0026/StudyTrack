@@ -1,4 +1,3 @@
-import os
 from contextlib import asynccontextmanager
 from pathlib import Path
 
@@ -40,7 +39,7 @@ app = FastAPI(title="StudyTrack", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5500"],
+    allow_origins=["http://localhost:5500", "http://127.0.0.1:5500"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -166,8 +165,10 @@ def create_course(course: schemas.CourseCreate, db: Session = Depends(get_db)):
 
 
 @app.get("/courses/", response_model=list[schemas.CourseRead])
-def list_courses(db: Session = Depends(get_db)):
-    return crud.get_courses(db)
+def list_courses(
+    student_id: int | None = Query(default=None), db: Session = Depends(get_db)
+):
+    return crud.get_courses(db, student_id=student_id)
 
 
 @app.get("/courses/{course_id}", response_model=schemas.CourseRead)
