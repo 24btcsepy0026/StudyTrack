@@ -39,7 +39,7 @@ app = FastAPI(title="StudyTrack", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5500", "http://127.0.0.1:5500"],
+    allow_origins=["http://localhost:5500"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -110,8 +110,9 @@ def get_roster_report(
 ):
     students = crud.get_students(db)
     student_dicts = [student_to_dict(s) for s in students]
-    report = format_roster_report(student_dicts)
     count = count_students_meeting_min_age(student_dicts, min_age)
+    filtered = [s for s in student_dicts if s["age"] >= min_age]
+    report = format_roster_report(filtered)
     return {"report": report, "count_meeting_min_age": count}
 
 

@@ -693,8 +693,8 @@ document.querySelectorAll(".sample-query-btn").forEach((btn) => {
     });
 });
 
-// --- Initial Page Load ---
-document.addEventListener("DOMContentLoaded", () => {
-    loadStudents();
+// --- Initialization ---
+document.addEventListener("DOMContentLoaded", async () => {
+    await loadStudents();
     loadCourses();
 });
