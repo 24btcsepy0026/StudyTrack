@@ -32,11 +32,11 @@ cp .env.example .env
 ### 3. Run the Application & Seeding
 To run the application, use Uvicorn:
 ```bash
-uvicorn main:app --reload --host 127.0.0.1 --port 8000
+uvicorn main:app --reload --host 127.0.0.1 --port 5500
 ```
 **Seeding:** The application uses a FastAPI `lifespan` handler to automatically call `seed_if_empty(db)`. If the `Student` table is empty upon startup, it inserts the exact seeded roster from `seed_data.py`. 
 
-Open your browser and navigate to: **http://127.0.0.1:8000/**
+Open your browser and navigate to: **http://127.0.0.1:5500/**
 
 ## API Endpoints Documentation
 
@@ -63,7 +63,7 @@ Open your browser and navigate to: **http://127.0.0.1:8000/**
 
 ## End-to-End Walkthrough
 
-1. **Opening the Dashboard:** Open `http://127.0.0.1:8000/`. You will see the seeded roster load automatically.
+1. **Opening the Dashboard:** Open `http://127.0.0.1:5500/`. You will see the seeded roster load automatically.
    - *Backend Log:* `INFO: 127.0.0.1:52132 - "GET /students/ HTTP/1.1" 200 OK`
 2. **Editing a Student's Age:** On the first card, change the age input to 25 and click "Save Age".
    - *Backend Log:* `INFO: 127.0.0.1:52132 - "PATCH /students/1 HTTP/1.1" 200 OK`
