@@ -92,10 +92,10 @@ Open your browser and navigate to: **http://127.0.0.1:5500/**
 
 ## Part 3: Integrated AI Assistant
 
-**Grading Mode Declaration:** The `mock` mode was exclusively used for grading demonstration. It operates completely offline, is deterministic, and no API key is committed anywhere in this repository.
+**Grading Mode Declaration:** The `real` mode was implemented as an optional second mode using the **Groq API provider** (`https://api.groq.com/openai/v1/chat/completions`) with the `llama-3.1-8b-instant` model. However, the system elegantly falls back to the deterministic offline `mock` mode if `AI_MODE=mock` is set. As requested by the guidelines, **no real API key is committed anywhere in this repository** (only a `.env.example` is committed). Grading demonstration can be performed in either mode!
 
 **LLM Prompt Design:**
-If `AI_MODE=real` were used with a genuine LLM (e.g., OpenAI gpt-3.5-turbo), the exact system prompt sent to get the structured JSON shape would be:
+When `AI_MODE=real` is used with the Groq LLM, the exact system prompt sent to get the structured JSON shape is:
 
 ```text
 You are an expert study assistant. Your task is to summarize the user's raw study notes.
