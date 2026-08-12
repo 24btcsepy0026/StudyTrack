@@ -51,6 +51,12 @@ def _derive_difficulty(text: str) -> str:
         return "hard"
 
 
+import os
+import json
+from dotenv import load_dotenv
+
+load_dotenv()
+
 def summarize_notes(raw_text: str) -> dict:
     """Summarize study notes into a fixed-shape JSON object."""
     if not raw_text or not raw_text.strip():
@@ -60,6 +66,37 @@ def summarize_notes(raw_text: str) -> dict:
             "difficulty": "easy",
         }
 
+    ai_mode = os.environ.get("AI_MODE", "mock").lower()
+    
+    if ai_mode == "real":
+        import groq
+        client = groq.Groq(api_key=os.environ.get("GROQ_API_KEY"))
+        prompt = f"""You are an expert study assistant. Your task is to summarize the user's raw study notes.
+Context: We need to categorize study materials for a Trainee Enablement dashboard.
+Constraints: 
+1. Your response MUST be exactly a valid JSON object with no extra markdown or conversational text.
+2. The JSON must contain exactly these three keys: "topic", "key_points", "difficulty".
+Format Instructions:
+- "topic": (string) A concise 2-4 word title for the notes.
+- "key_points": (list of strings) Up to 3 important sentences summarizing the core concepts.
+- "difficulty": (string) Choose either "easy", "medium", or "hard" based on how dense the notes are.
+
+Notes to summarize:
+{raw_text}
+"""
+        response = client.chat.completions.create(
+            model="llama-3.1-8b-instant",
+            messages=[{"role": "user", "content": prompt}],
+            response_format={"type": "json_object"},
+            temperature=0,
+        )
+        try:
+            return json.loads(response.choices[0].message.content)
+        except Exception:
+            # Fallback to mock if parsing fails
+            pass
+
+    # Fallback to mock behavior
     return {
         "topic": _derive_topic(raw_text),
         "key_points": _extract_key_points(raw_text),
